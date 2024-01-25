@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Location Finder</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,700;1,100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class = "container">
+        <br><br>
+        <h1 class = text-center>
+            Nearby Place Finder
+        </h1>
+        <div id = "map"></div>
+        <div class = "form-group">
+            <label for = "location" >Enter Location:</label>
+            <br><br>
+            <input type = "text" class="form-control" id="autocomplete" placeholder="Enter a location">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="type">Select Place Type:</label>
+            <br>
+            <select class="form-control" name="" id="type">
+                <option id='recycling-center'>recycling center</option>
+                <option id='airport'>airport</option>
+                <option id='police'>police</option>
+            </select>
+        </div>
+        <br><br>
+        <table class="table table-bordered table-striped" id="places"></table>
+    </div>
+    <script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDipVLxgc2CYfPaQ-xH2i-Equc7p81yVCg&libraries=places&callback=initMap"
+    async defer></script>
+    <script>
+        function initMap(){
+            autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')),
+            {
+                types:['geocode']
+            });
+            
+            //When the user selects an address from the dropdown, search for nearby places
+            autocomplete.addListener('place_changed',searchNearbyPlaces);
+        }
+
+        document.getElementById('type').onchange = searchNearbyPlaces
+
+        function searchNearbyPlaces (){
+            document.getElementById('places').innerHTML = ''
+
+            //Get the place details from the autocomplete object
+            var place = autocomplete.getPlace()
+            console.log(place)
+
+            //Create a map centered at the location enter in the autocomplete
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: place.geometry.location,
+                zoom: 15
+            });
+
+            //Perform a nearby search for places of type 'store'
+            service = new google.maps.places.PlacesService(map);
+            service.nearbySearch({
+                location: place.geometry.location,
+                radius: '500',
+                type: [document.getElementById('type').value]
+            }, callback);
+        }
+
+        function callback(results, status){
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                console.log(results.length)
+                for (var i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                }
+            }
+        }
+        
+        function createMarker(place) {
+            console.log(place)
+            var table = document.getElementById("places");
+            var row = table.insertRow();
+            var cell1 = row.insertCell(0);
+            cell1.innerHTML = place.name;
+            if (place.photos) {
+                let photoUrl = place.photos[0].getUrl();
+                let cell2 = row.insertCell(1)
+                cell2.innerHTML = '<img width = "300" height = "300" src="${photoUrl}"/>'
+                
+            } else {
+                let photoUrl = "https://via.placeholder.com/150"
+                let cell2 = row.insertCell(1)
+                cell2.innerHTML = '<img width = "300" height = "300" src="${photoUrl}"/>'
+            }
+        }
+
+    </script>
+</body>
+</html>

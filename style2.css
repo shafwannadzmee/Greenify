@@ -1,0 +1,88 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+.location-module{
+    width: 100%;
+    min-height: 100vh;
+    background: #9ad149;
+    text-align: center;
+    padding-top: 30px;
+    color: #000000;
+    margin: auto;
+}
+.location h1{
+    text-align: center;
+    color: rgb(0, 0, 0);
+    padding-top: 5%;
+    font-size: 46px;
+    letter-spacing: 3px;
+}
+.location-form{
+    color: white;
+    text-align: center;
+    margin-top: 1px;
+    margin-bottom: 5px;
+}
+.input-box{
+    flex-direction: column;
+}
+.input-box input{
+    width: 8%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid white;
+    color: white;
+}
+.input-box label{
+    border-bottom: none;
+    color: white
+}
+.other a{
+    border: 1px solid;
+    border: none;
+    padding: 2px;
+    font-size: 14px;
+    background: #007804;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    font-weight: 300;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+.other .btn3{
+    margin-top: 7px;
+    color: rgb(255, 255, 255);
+    padding: 2px;
+    background: #007804;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 300;
+    outline: none;
+    border: none;
+    transition: 0.3s ease;
+}
+.other a:hover,
+.other .btn3:hover{
+    background-color: #003a02;
+}
+.recycle-location{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+}
+.table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.table tr, .table td{
+    padding: 12px 15px;
+    border: 1px solid black;
+    text-align: center;
+    background-color: white;
+}
+
